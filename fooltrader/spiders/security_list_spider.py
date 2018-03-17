@@ -5,22 +5,18 @@ import os
 
 import pandas as pd
 import scrapy
-from kafka import KafkaProducer
 from scrapy import Request
 from scrapy import signals
 
 from fooltrader.consts import DEFAULT_SH_HEADER, DEFAULT_SZ_HEADER
 from fooltrader.contract import files_contract
 from fooltrader.contract.data_contract import STOCK_META_COL
-from fooltrader.settings import KAFKA_HOST, AUTO_KAFKA
 
 
 # TODO:check whether has new stock and new trading date to ignore download again
 class SecurityListSpider(scrapy.Spider):
     name = "stock_list"
 
-    if AUTO_KAFKA:
-        producer = KafkaProducer(bootstrap_servers=KAFKA_HOST)
 
     def start_requests(self):
         yield Request(

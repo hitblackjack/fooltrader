@@ -4,7 +4,6 @@ import os
 
 import pandas as pd
 import scrapy
-from kafka import KafkaProducer
 from scrapy import Request
 from scrapy import Selector
 from scrapy import signals
@@ -13,7 +12,6 @@ from fooltrader.api.quote import get_security_list, kdata_exist, merge_kdata_to_
 from fooltrader.consts import DEFAULT_KDATA_HEADER
 from fooltrader.contract import data_contract
 from fooltrader.contract.files_contract import get_kdata_path
-from fooltrader.settings import KAFKA_HOST, AUTO_KAFKA
 from fooltrader.utils.utils import get_quarters, get_year_quarter
 
 
@@ -29,8 +27,6 @@ class StockKDataSpider(scrapy.Spider):
         }
     }
 
-    if AUTO_KAFKA:
-        producer = KafkaProducer(bootstrap_servers=KAFKA_HOST)
 
     def yield_request(self, item, trading_dates=[], fuquan=None):
         the_quarters = []
